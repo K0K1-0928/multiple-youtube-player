@@ -1,15 +1,6 @@
-let player: YT.Player;
 function onYouTubeIframeAPIReady() {
-  player = new YT.Player('player', {
-    height: '360',
-    width: '640',
-    videoId: 'M7lc1UVf-VE',
-    playerVars: { autoplay: 1, mute: 1, controls: 1 },
-    events: {
-      onReady: onPlayerReady,
-      onStateChange: onPlayerStateChange,
-    },
-  });
+  createYtPlayer('M7lc1UVf-VE');
+  createYtPlayer('M7lc1UVf-VE');
 }
 const onPlayerReady = (event: YT.PlayerEvent) => {
   event.target.mute();
@@ -20,4 +11,20 @@ const onPlayerStateChange = (event: YT.OnStateChangeEvent) => {
     event.target.unMute();
     event.target.playVideo();
   }
+};
+const createYtPlayer = (videoId: string) => {
+  const players = document.getElementById('js-players');
+  const childCount = players?.childElementCount;
+  const div = document.createElement('div');
+  div.id = `js-player-${childCount}`;
+  players?.appendChild(div);
+  return new YT.Player(`js-player-${childCount}`, {
+    height: '360',
+    width: '640',
+    videoId: videoId,
+    events: {
+      onReady: onPlayerReady,
+      onStateChange: onPlayerStateChange,
+    },
+  });
 };
