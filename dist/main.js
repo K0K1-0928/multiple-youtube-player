@@ -17,6 +17,7 @@ const createYtPlayer = (videoId) => {
     const players = document.getElementById('js-players');
     const childCount = players === null || players === void 0 ? void 0 : players.childElementCount;
     const div = document.createElement('div');
+    div.classList.add('col');
     div.id = `js-player-${childCount}`;
     players === null || players === void 0 ? void 0 : players.appendChild(div);
     return new YT.Player(`js-player-${childCount}`, {
