@@ -4,6 +4,7 @@ function onYouTubeIframeAPIReady() {
     height: '360',
     width: '640',
     videoId: 'M7lc1UVf-VE',
+    playerVars: { autoplay: 1, mute: 1, controls: 1 },
     events: {
       onReady: onPlayerReady,
       onStateChange: onPlayerStateChange,
@@ -11,15 +12,12 @@ function onYouTubeIframeAPIReady() {
   });
 }
 const onPlayerReady = (event: YT.PlayerEvent) => {
+  event.target.mute();
   event.target.playVideo();
 };
-let done = false;
 const onPlayerStateChange = (event: YT.OnStateChangeEvent) => {
-  if (event.data == YT.PlayerState.PLAYING && !done) {
-    setTimeout(stopVideo, 6000);
-    done = true;
+  if (event.data === YT.PlayerState.PAUSED && event.target.isMuted()) {
+    event.target.unMute();
+    event.target.playVideo();
   }
-};
-const stopVideo = () => {
-  player.stopVideo();
 };
