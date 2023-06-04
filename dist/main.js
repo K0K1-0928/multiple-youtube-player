@@ -5,37 +5,14 @@ function onYouTubeIframeAPIReady() {
     const viewButton = document.getElementById('viewButton');
     viewButton.addEventListener('click', viewButtonClick);
 }
-const onPlayerReady = (event) => {
-    event.target.mute();
-    event.target.playVideo();
-};
-const onPlayerStateChange = (event) => {
-    if (event.data === YT.PlayerState.PAUSED && event.target.isMuted()) {
-        event.target.unMute();
-        event.target.playVideo();
+const viewButtonClick = () => {
+    if (!isYouTubeIframeAPIReady) {
+        return null;
     }
-};
-const createYtPlayer = (videoId) => {
-    const players = document.getElementById('js-players');
-    const childCount = players === null || players === void 0 ? void 0 : players.childElementCount;
-    const colDiv = document.createElement('div');
-    const wrapDiv = document.createElement('div');
-    wrapDiv.classList.add('iframe-wrap');
-    const playerDiv = document.createElement('div');
-    playerDiv.id = `js-player-${childCount}`;
-    wrapDiv.appendChild(playerDiv);
-    colDiv.appendChild(wrapDiv);
-    players === null || players === void 0 ? void 0 : players.appendChild(colDiv);
-    changeColumnsSize('js-players');
-    return new YT.Player(`js-player-${childCount}`, {
-        height: '100%',
-        width: '100%',
-        videoId: videoId,
-        events: {
-            onReady: onPlayerReady,
-            onStateChange: onPlayerStateChange,
-        },
-    });
+    const inputYouTubeUrlOrId = (document.getElementById('inputYouTubeUrlOrId'));
+    const youTubeId = extractYouTubeIdFromUrl(inputYouTubeUrlOrId.value);
+    createYtPlayer(youTubeId);
+    inputYouTubeUrlOrId.value = '';
 };
 const changeColumnsSize = (rowId) => {
     const row = document.getElementById(rowId);
@@ -59,14 +36,19 @@ const changeColumnsSize = (rowId) => {
         });
     });
 };
-const viewButtonClick = () => {
-    if (!isYouTubeIframeAPIReady) {
-        return null;
-    }
-    const inputYouTubeUrlOrId = (document.getElementById('inputYouTubeUrlOrId'));
-    const youTubeId = extractYouTubeIdFromUrl(inputYouTubeUrlOrId.value);
-    createYtPlayer(youTubeId);
-    inputYouTubeUrlOrId.value = '';
+const createYtPlayer = (videoId) => {
+    const players = document.getElementById('js-players');
+    const childCount = players === null || players === void 0 ? void 0 : players.childElementCount;
+    const colDiv = document.createElement('div');
+    const wrapDiv = document.createElement('div');
+    wrapDiv.classList.add('iframe-wrap');
+    const playerDiv = document.createElement('div');
+    playerDiv.id = `js-player-${childCount}`;
+    wrapDiv.appendChild(playerDiv);
+    colDiv.appendChild(wrapDiv);
+    players === null || players === void 0 ? void 0 : players.appendChild(colDiv);
+    changeColumnsSize('js-players');
+    return generateYtPlayerIframe(`js-player-${childCount}`, videoId);
 };
 const extractYouTubeIdFromUrl = (urlOrId) => {
     const url = new URL(urlOrId);
@@ -83,4 +65,25 @@ const extractYouTubeIdFromUrl = (urlOrId) => {
         return pathname.replace('/', '');
     }
     return urlOrId;
+};
+const generateYtPlayerIframe = (htmlId, videoId) => {
+    return new YT.Player(htmlId, {
+        height: '100%',
+        width: '100%',
+        videoId: videoId,
+        events: {
+            onReady: onPlayerReady,
+            onStateChange: onPlayerStateChange,
+        },
+    });
+};
+const onPlayerReady = (event) => {
+    event.target.mute();
+    event.target.playVideo();
+};
+const onPlayerStateChange = (event) => {
+    if (event.data === YT.PlayerState.PAUSED && event.target.isMuted()) {
+        event.target.unMute();
+        event.target.playVideo();
+    }
 };
