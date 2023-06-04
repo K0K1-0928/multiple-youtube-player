@@ -1,7 +1,9 @@
 "use strict";
+let isYouTubeIframeAPIReady = false;
 function onYouTubeIframeAPIReady() {
-    createYtPlayer('M7lc1UVf-VE');
-    createYtPlayer('M7lc1UVf-VE');
+    isYouTubeIframeAPIReady = true;
+    const viewButton = document.getElementById('viewButton');
+    viewButton.addEventListener('click', viewButtonClick);
 }
 const onPlayerReady = (event) => {
     event.target.mute();
@@ -38,9 +40,6 @@ const createYtPlayer = (videoId) => {
 const changeColumnsSize = (rowId) => {
     const row = document.getElementById(rowId);
     const children = row === null || row === void 0 ? void 0 : row.children;
-    if (children == null) {
-        return null;
-    }
     let colSizes = [];
     if (children.length >= 5) {
         colSizes.push('col-4');
@@ -59,4 +58,12 @@ const changeColumnsSize = (rowId) => {
             element.classList.add(col);
         });
     });
+};
+const viewButtonClick = () => {
+    if (!isYouTubeIframeAPIReady) {
+        return null;
+    }
+    const inputYouTubeId = (document.getElementById('inputYouTubeId'));
+    createYtPlayer(inputYouTubeId.value);
+    inputYouTubeId.value = '';
 };
