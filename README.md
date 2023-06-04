@@ -18,10 +18,10 @@ Playerは複数生成できるため、複数動画の同時視聴などにご�
 
 A. 以下の形式に対応しています。
 
-- '<https://www.youtube.com/watch?v=xxxxxxxxxxx>'
-- '<https://www.youtube.com/live/xxxxxxxxxxx>'
-- '<https://youtu.be/xxxxxxxxxxx>'
-- 'xxxxxxxxxxx'
+- `https://www.youtube.com/watch?v=xxxxxxxxxxx`
+- `https://www.youtube.com/live/xxxxxxxxxxx`
+- `https://youtu.be/xxxxxxxxxxx`
+- `xxxxxxxxxxx`
 
 ### Q. 自動再生時にミュート状態になるのはどうしてですか？
 
