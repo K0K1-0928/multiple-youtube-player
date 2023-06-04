@@ -60,9 +60,26 @@ const viewButtonClick = () => {
   if (!isYouTubeIframeAPIReady) {
     return null;
   }
-  const inputYouTubeId = <HTMLInputElement>(
-    document.getElementById('inputYouTubeId')!
+  const inputYouTubeUrlOrId = <HTMLInputElement>(
+    document.getElementById('inputYouTubeUrlOrId')!
   );
-  createYtPlayer(inputYouTubeId.value);
-  inputYouTubeId.value = '';
+  const youTubeId = extractYouTubeIdFromUrl(inputYouTubeUrlOrId.value);
+  createYtPlayer(youTubeId);
+  inputYouTubeUrlOrId.value = '';
+};
+const extractYouTubeIdFromUrl = (urlOrId: string) => {
+  const url = new URL(urlOrId);
+  if (urlOrId.startsWith('https://www.youtube.com/watch')) {
+    const params = url.searchParams;
+    return params.get('v')!;
+  }
+  if (urlOrId.startsWith('https://www.youtube.com/live')) {
+    const pathname = url.pathname;
+    return pathname.replace('/live/', '');
+  }
+  if (urlOrId.startsWith('https://youtu.be')) {
+    const pathname = url.pathname;
+    return pathname.replace('/', '');
+  }
+  return urlOrId;
 };
