@@ -7,10 +7,11 @@ Playerは複数生成できるため、複数動画の同時視聴などにご�
 
 現在はローカル環境での実行のみに対応しています。
 
-1. 本リポジトリからファイル一式をダウンロードします。
-2. `index.html` を任意のブラウザで開きます。
-3. 入力欄にYouTubeのURLまたはIDを入力し、Viewボタンを押下します。
-4. 指定したYouTube動画のPlayerが生成され、ミュート状態で自動再生されます。
+1. [最新リリース](https://github.com/K0K1-0928/multiple-youtube-player/releases/tag/v0.2.0-alpha)から[zipファイル](multiple-youtube-player-v0.2.0-alpha.zip)をダウンロードします。
+2. ダウンロードしたzipファイルを任意のディレクトリに解凍します。
+3. `index.html` を任意のブラウザで開きます。
+4. 入力欄にYouTubeのURLまたはIDを入力し、Viewボタンを押下します。
+5. 指定したYouTube動画のPlayerが生成され、ミュート状態で自動再生されます。
 
 ## FAQ
 
