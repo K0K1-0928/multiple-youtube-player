@@ -51,6 +51,9 @@ const createYtPlayer = (videoId) => {
     return generateYtPlayerIframe(`js-player-${childCount}`, videoId);
 };
 const extractYouTubeIdFromUrl = (urlOrId) => {
+    if (!isValidUrl(urlOrId)) {
+        return urlOrId;
+    }
     const url = new URL(urlOrId);
     if (urlOrId.startsWith('https://www.youtube.com/watch')) {
         const params = url.searchParams;
@@ -65,6 +68,15 @@ const extractYouTubeIdFromUrl = (urlOrId) => {
         return pathname.replace('/', '');
     }
     return urlOrId;
+};
+const isValidUrl = (string) => {
+    try {
+        new URL(string);
+        return true;
+    }
+    catch (_) {
+        return false;
+    }
 };
 const generateYtPlayerIframe = (htmlId, videoId) => {
     return new YT.Player(htmlId, {
